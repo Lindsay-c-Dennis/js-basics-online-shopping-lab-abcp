@@ -29,11 +29,10 @@ function viewCart() {
   }
   else {
     var itemAndPrice = [];
-    for (var i=0; i< (cart.length-1); i++) {
-      itemAndPrice.push(` ${Object.keys(cart[i])} at $${Object.values(cart[i])}, `);
+    for (var i=0; i<(cart.length-1); i++) {
+      itemAndPrice.push(` ${Object.keys(cart[i])} at $${Object.values(cart[i])}`);
     }
-    var lastItem = itemAndPrice.pop();
-    console.log(`In your cart, you have ${[itemAndPrice]} and ${lastItem}`);
+    console.log(`In your cart, you have${[itemAndPrice].join(', ')}, and ${Object.keys(cart[cart.length-1])} at $${Object.values(cart[cart.length-1])}.`);
   }
 }
 
@@ -50,17 +49,17 @@ function total() {
 }
 
 function removeFromCart(item) {
-  if (cart.hasOwnProperty(item) === false) {
-    console.log("That item is not in your cart.")
-  }
-  else {
-    function findItem(element) {
-      return element===item;
+  for (var i=0; i<cart.length; i++) {
+    if (cart[i].hasOwnProperty(item)) {
+      cart.splice(i,1);
     }
-    var index = cart.findIndex(findItem);
-    delete cart[index];
-    return cart;
-}}
+  }
+  if (cart.hasOwnProperty(item) === false){
+    console.log("That item is not in your cart.");
+  }
+    
+  return cart;
+}
 
 function placeOrder(cardNumber) {
   if (cardNumber === undefined) {
@@ -71,3 +70,4 @@ function placeOrder(cardNumber) {
     cart = [];
   }
 }
+
